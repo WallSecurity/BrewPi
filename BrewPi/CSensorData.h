@@ -27,17 +27,25 @@ public:
 //    void setTemperature();
 
     /*!
-     * \brief setupTotalTimer setup the total timer to set the end time of the brew process and setup the intervall timer to get temperature points
+     * \brief setupTotalTimer setup the total timer to set the end time of the brew process
      * \param length total length as int
      * \return true, if successful
      */
     Q_INVOKABLE bool setupTimers(int length);
 
     /*!
-     * \brief endTimers end all timers
+     * \brief endTimers end total timer
      * \return true, if successful
      */
     Q_INVOKABLE bool endTimers();
+
+    Q_INVOKABLE void setIntervall();
+
+    /*!
+     * \brief endTimers end intervall timer
+     * \return true, if successful
+     */
+    Q_INVOKABLE void endIntervall();
 
     /*!
      * \brief getTimer return time counted so far
@@ -64,6 +72,7 @@ public slots:
     void startBrewProcess();
     void endBrewProcess();
     void setTemperature();
+    void setTemperatureNoConnect();
     void setMotorSpeed(QString speed);
     void setAutoMotorSpeed(QString step);
 
@@ -76,6 +85,10 @@ private:
      * \brief m_timer QTimer Object for intervall points
      */
     QTimer *m_intervall;
+    /*!
+     * \brief m_timer QTimer Object for intervall points without connections
+     */
+    QTimer *m_intervallNoConnect;
     /*!
      * \brief m_total total timer
      */

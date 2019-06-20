@@ -1,5 +1,5 @@
 #include "CRecipeGraph.h"
-#include "globalsConstants.h"
+#include "CGlobals.h"
 #include "CRecipe.h"
 #include "CMashRest.h"
 #include <QVector>

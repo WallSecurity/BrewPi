@@ -1,0 +1,55 @@
+#ifndef CGLOBALS_H
+#define CGLOBALS_H
+
+#include <QObject>
+
+class CGlobals : public QObject
+{
+    Q_OBJECT
+public:
+    explicit CGlobals(QObject *parent = nullptr);
+
+    Q_INVOKABLE qreal heatingMultiplierStartFerula() const;
+    Q_INVOKABLE void setHeatingMultiplierStartFerula(const qreal &heatingMultiplierStartFerula);
+
+    Q_INVOKABLE qreal heatingMultiplierFerulaProtease() const;
+    Q_INVOKABLE void setHeatingMultiplierFerulaProtease(const qreal &heatingMultiplierFerulaProtease);
+
+    Q_INVOKABLE qreal heatingMultiplierProteaseMaltose() const;
+    Q_INVOKABLE void setHeatingMultiplierProteaseMaltose(const qreal &heatingMultiplierProteaseMaltose);
+
+    Q_INVOKABLE qreal heatingMultiplierMaltoseSugar() const;
+    Q_INVOKABLE void setHeatingMultiplierMaltoseSugar(const qreal &heatingMultiplierMaltoseSugar);
+
+    Q_INVOKABLE qreal heatingMultiplierSugarEnd() const;
+    Q_INVOKABLE void setHeatingMultiplierSugarEnd(const qreal &heatingMultiplierSugarEnd);
+
+    Q_INVOKABLE int comportNumber() const;
+    Q_INVOKABLE void setComportNumber(int comportNumber);
+
+    Q_INVOKABLE int intervallTimer() const;
+    Q_INVOKABLE void setIntervallTimer(int intervallTimer);
+
+    Q_INVOKABLE qreal motorspeedHeat() const;
+    Q_INVOKABLE void setMotorspeedHeat(const qreal &motorspeedHeat);
+
+    Q_INVOKABLE qreal motorspeedNormal() const;
+    Q_INVOKABLE void setMotorspeedNormal(const qreal &motorspeedNormal);
+
+signals:
+
+public slots:
+
+private:
+    qreal m_heatingMultiplierStartFerula;
+    qreal m_heatingMultiplierFerulaProtease;
+    qreal m_heatingMultiplierProteaseMaltose;
+    qreal m_heatingMultiplierMaltoseSugar;
+    qreal m_heatingMultiplierSugarEnd;
+    int m_comportNumber; //24
+    int m_intervallTimer; //1.0
+    qreal m_motorspeedHeat; //75.0
+    qreal m_motorspeedNormal; //50.0
+};
+
+#endif // CGLOBALS_H

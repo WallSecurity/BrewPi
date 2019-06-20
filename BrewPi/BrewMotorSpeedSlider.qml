@@ -15,7 +15,7 @@ Slider {
     maximumValue: 100
     stepSize: 5
     wheelEnabled: false
-    tickmarksEnabled: true
+    tickmarksEnabled: false
     width: parent.width * 2/3
     height: parent.height
     anchors.top: parent.top

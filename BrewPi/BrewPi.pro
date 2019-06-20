@@ -13,13 +13,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    CGlobals.cpp \
     CMashRest.cpp \
     COnQuit.cpp \
     CRecipe.cpp \
     CRecipeList.cpp \
     CRecipeModel.cpp \
     CRecipeToCSV.cpp \
-    globalsConstants.cpp \
     main.cpp \
     rs232.cpp \
     CRecipeGraph.cpp \
@@ -44,13 +44,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    CGlobals.h \
     CMashRest.h \
     COnQuit.h \
     CRecipe.h \
     CRecipeList.h \
     CRecipeModel.h \
     CRecipeToCSV.h \
-    globalsConstants.h \
     rs232.h \
     CRecipeGraph.h \
     CSensorData.h \

@@ -1,7 +1,7 @@
 #include "CBrewProgress.h"
 #include "CBrewProgressData.h"
 #include "CRecipe.h"
-#include "globalsConstants.h"
+#include "CGlobals.h"
 #include "CMashRest.h"
 #include <QList>
 

@@ -3,12 +3,15 @@ import QtQuick.Controls 2.5
 import QtCharts 2.3
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Material 2.3
+import QtQuick.Window 2.3
 
 import brewpi.enum 1.0
 
 ApplicationWindow {
     id: window
     visible: true
+    //CHANGE ME
+//    visibility: Qt.WindowFullScreen
     width: 1024
     height: 600
     title: qsTr("BrewPi")
@@ -18,7 +21,7 @@ ApplicationWindow {
     Connections {
         target: SensorData
         onTemperatureChanged: {
-            console.log("adding point (", SensorData.getTimer(), ",",SensorData.temperatureToDouble()(), ")");
+            console.log("adding point (", SensorData.getTimer(), ",",SensorData.temperatureToDouble(), ")");
             brewChartLineSeries.append(SensorData.getTimer(), SensorData.temperatureToDouble());
         }
     }
@@ -79,6 +82,7 @@ ApplicationWindow {
         width: parent.width
         height: implicitHeight
         currentIndex: swipeView.currentIndex
+
 
         TabButton {
             id: mashButton
@@ -310,6 +314,7 @@ ApplicationWindow {
                 BrewStartButton {
                     id: startButton
                     onClicked: {
+                        SensorData.endIntervall()
                         stopButton.visible = true
                         startButton.visible = false
                         swipeView.interactive = false
@@ -344,7 +349,7 @@ ApplicationWindow {
                         brewProgress.value = 0
                         SensorData.setMotorSpeed(0)
                         speedSlider.value = SensorData.getSpeed()
-                        SensorData.endTimers()
+                        SensorData.endBrewProcess()
                     }
                 }
             }
@@ -480,6 +485,8 @@ ApplicationWindow {
                     infoRect.visible = true
                     brewChartView.visible = true
                     brewTitle.visible = true
+                    SensorData.setIntervall()
+                    brewTempTimer.start()
                     setUpNextProgress()
                     swipeView.setCurrentIndex(0)
                 }

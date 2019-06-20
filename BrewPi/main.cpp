@@ -9,7 +9,7 @@
 #include "CRecipeList.h"
 #include "CRecipe.h"
 #include "CRecipeToCSV.h"
-#include "globalsConstants.h"
+#include "CGlobals.h"
 #include "COnQuit.h"
 #include "rs232.h"
 #include "CEnumeration.h"

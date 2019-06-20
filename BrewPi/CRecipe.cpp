@@ -1,7 +1,7 @@
 #include "CRecipe.h"
 #include "CMashRest.h"
 #include <QDate>
-#include "globalsConstants.h"
+#include "CGlobals.h"
 #include "CBrewProgress.h"
 #include <qdebug.h>
 

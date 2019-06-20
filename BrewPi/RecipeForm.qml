@@ -42,10 +42,10 @@ ListView {
         Text {
             id: deleteText
             text: qsTr("Rezept löschen?")
+            color: Material.color(Material.Indigo, 2)
             font.pointSize: 22
             anchors.centerIn: parent
             anchors.verticalCenterOffset: -50
-            color: "white"
         }
 
         Button {
@@ -85,6 +85,18 @@ ListView {
         modality: Qt.WindowModal
         title: "Neues Rezept"
         color: Material.color(Material.Grey, 9)
+
+        ScrollView {
+            anchors.fill: parent
+            clip: true
+
+            Flickable {
+                contentHeight: editRecipeWindow.height * 1.5
+                width: parent.width
+
+                Rectangle {
+                    anchors.fill: parent
+                    color: "transparent"
 
         Button {
             id: yesButton
@@ -152,9 +164,9 @@ ListView {
                 TextField {id: tfStartT; selectByMouse: true; text: "45.0"; font.pointSize: 14; Layout.leftMargin: tTemp.leftPadding}
                 TextField {id: tfStartD; selectByMouse: true; text: "10"; font.pointSize: 14; Layout.leftMargin: tbDura.leftPadding}
 
-//                Text {id: tGlucT; text: "Glukanase-Rast"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-//                TextField {id: tfGlucT; selectByMouse: true; placeholderText: "39.0"; font.pointSize: 14; Layout.leftMargin: tTemp.leftPadding}
-//                TextField {id: tfGlucD; selectByMouse: true; placeholderText: "15"; font.pointSize: 14; Layout.leftMargin: tbDura.leftPadding}
+                //                Text {id: tGlucT; text: "Glukanase-Rast"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                //                TextField {id: tfGlucT; selectByMouse: true; placeholderText: "39.0"; font.pointSize: 14; Layout.leftMargin: tTemp.leftPadding}
+                //                TextField {id: tfGlucD; selectByMouse: true; placeholderText: "15"; font.pointSize: 14; Layout.leftMargin: tbDura.leftPadding}
 
                 Text {id: tFeruT; text: "Ferula-Rast"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
                 TextField {id: tfFeruT; selectByMouse: true; placeholderText: "45.0"; font.pointSize: 14; Layout.leftMargin: tTemp.leftPadding}
@@ -177,6 +189,9 @@ ListView {
                 Text {id: tfEndD; text: "0"; color: "white"; font.pointSize: 14; Layout.leftMargin: tbDura.leftPadding}
             }
         }
+                }
+            }
+        }
     }
 
 
@@ -185,104 +200,122 @@ ListView {
         id: editRecipeWindow
         width: 800
         height: 480
+        y: 0
         flags: "Dialog"
         modality: Qt.WindowModal
         title: "Rezept bearbeiten"
         color: Material.color(Material.Grey, 9)
 
-        Button {
-            id: yesButton2
-            text: "Rezept ändern"
-            font.pointSize: 15
-            width: formButtonWidth
-            height: formButtonHeight
-            x: formButtonOffsetX
-            y: formButtonOffsetY
-            onClicked: {
-                model.setAt(currentIndex, tfNumber2.text, tfName2.text, tfDate2.text, tfAmount2.text, tfStartT2.text, tfStartD2.text, tfFeruT2.text,tfFeruD2.text,tfProtT2.text, tfProtD2.text, tfMaltT2.text,tfMaltD2.text,tfSugT2.text,tfSugD2.text, tfEndT2.text, tfEndD2.text)
-                editRecipeWindow.close()
-            }
-        }
-
-        Button {
-            id: cancelButton2
-            text: "Abbrechen"
-            font.pointSize: 15
-            width: formButtonWidth
-            height: formButtonHeight
-            x: formButtonOffsetX
-            y: formButtonOffsetY
-            anchors.left: yesButton2.right
-            anchors.leftMargin: formButtonMargin
-            onClicked: editRecipeWindow.close()
-        }
-
-        RowLayout {
-            id: infoRow2
+        ScrollView {
+            id: scrollView
             anchors.fill: parent
-            spacing: 0
+            clip: true
 
-            ColumnLayout {
-                id: stdInfo2
-                Layout.alignment: Qt.AlignTop
-                spacing: 10
-                Layout.topMargin: 20
-                Layout.leftMargin: 20
+            Flickable {
+                contentHeight: editRecipeWindow.height * 1.5
+                width: parent.width
 
-                Text {id: tName2; text: "Name"; leftPadding: 20; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-                TextField {id: tfName2; selectByMouse: true; text: model.at(currentIndex, 257); implicitWidth: infoRow2.width /4; font.pointSize: 14; Layout.leftMargin: tName2.leftPadding}
+                Rectangle {
+                    anchors.fill: parent
+                    color: "transparent"
 
-                Text {id: tNumber2; text: "Version"; leftPadding: 20; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-                TextField {id: tfNumber2; selectByMouse: true; text: model.at(currentIndex, 256); inputMask: "99"; font.pointSize: 14; Layout.leftMargin: tNumber2.leftPadding}
 
-                Text {id: tDate2; text: "Datum"; leftPadding: 20; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-                TextField {id: tfDate2; selectByMouse: true; text: model.at(currentIndex, 258); inputMask: "99-99-9999"; font.pointSize: 14; Layout.leftMargin: tDate2.leftPadding}
+                    Button {
+                        id: yesButton2
+                        text: "Rezept ändern"
+                        font.pointSize: 15
+                        width: formButtonWidth
+                        height: formButtonHeight
+                        x: formButtonOffsetX
+                        y: formButtonOffsetY
+                        onClicked: {
+                            model.setAt(currentIndex, tfNumber2.text, tfName2.text, tfDate2.text, tfAmount2.text, tfStartT2.text, tfStartD2.text, tfFeruT2.text,tfFeruD2.text,tfProtT2.text, tfProtD2.text, tfMaltT2.text,tfMaltD2.text,tfSugT2.text,tfSugD2.text, tfEndT2.text, tfEndD2.text)
+                            editRecipeWindow.close()
+                        }
+                    }
 
-                Text {id: tAmount2; text: "Menge [Liter]"; leftPadding: 20; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-                TextField {id: tfAmount2; selectByMouse: true; text: model.at(currentIndex, 259); font.pointSize: 14; Layout.leftMargin: tDate2.leftPadding}
+                    Button {
+                        id: cancelButton2
+                        text: "Abbrechen"
+                        font.pointSize: 15
+                        width: formButtonWidth
+                        height: formButtonHeight
+                        x: formButtonOffsetX
+                        y: formButtonOffsetY
+                        anchors.left: yesButton2.right
+                        anchors.leftMargin: formButtonMargin
+                        onClicked: editRecipeWindow.close()
+                    }
 
-                Text {id: tDura2; text: "Braudauer [Min]"; leftPadding: 20; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-                Text {id: ttDura2; text: model.at(currentIndex, 260); color: "white"; font.pointSize: 14; Layout.leftMargin: tAmount2.leftPadding}
-            }
+                    RowLayout {
+                        id: infoRow2
+                        anchors.fill: parent
+                        spacing: 0
 
-            GridLayout {
-                Layout.alignment: Qt.AlignTop
-                Layout.topMargin: 10
-                columns: 3
-                columnSpacing: 30
-                rowSpacing: 13
+                        ColumnLayout {
+                            id: stdInfo2
+                            Layout.alignment: Qt.AlignTop
+                            spacing: 10
+                            Layout.topMargin: 20
+                            Layout.leftMargin: 20
 
-                Text {id: tRest2; leftPadding: 10; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-                Text {id: tTemp2; text: "[°C]"; leftPadding: 10; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-                Text {id: tbDura2; text: "[Min]"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            Text {id: tName2; text: "Name"; leftPadding: 20; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            TextField {id: tfName2; selectByMouse: true; text: model.at(currentIndex, 257); implicitWidth: infoRow2.width /4; font.pointSize: 14; Layout.leftMargin: tName2.leftPadding}
 
-                Text {id: tStartT2; text: "Einmaischen"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-                TextField {id: tfStartT2; selectByMouse: true; text: model.at(currentIndex, 261); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
-                TextField {id: tfStartD2; selectByMouse: true; text: model.at(currentIndex, 262); font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+                            Text {id: tNumber2; text: "Version"; leftPadding: 20; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            TextField {id: tfNumber2; selectByMouse: true; text: model.at(currentIndex, 256); inputMask: "99"; font.pointSize: 14; Layout.leftMargin: tNumber2.leftPadding}
 
-//                Text {id: tGlucT2; text: "Glukanase-Rast"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-//                TextField {id: tfGlucT2; selectByMouse: true; text: model.at(currentIndex, 263); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
-//                TextField {id: tfGlucD2; selectByMouse: true; text: model.at(currentIndex, 264); font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+                            Text {id: tDate2; text: "Datum"; leftPadding: 20; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            TextField {id: tfDate2; selectByMouse: true; text: model.at(currentIndex, 258); inputMask: "99-99-9999"; font.pointSize: 14; Layout.leftMargin: tDate2.leftPadding}
 
-                Text {id: tFeruT2; text: "Ferula-Rast"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-                TextField {id: tfFeruT2; selectByMouse: true; text: model.at(currentIndex, 263); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
-                TextField {id: tfFeruD2; selectByMouse: true; text: model.at(currentIndex, 264); font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+                            Text {id: tAmount2; text: "Menge [Liter]"; leftPadding: 20; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            TextField {id: tfAmount2; selectByMouse: true; text: model.at(currentIndex, 259); font.pointSize: 14; Layout.leftMargin: tDate2.leftPadding}
 
-                Text {id: tProtT2; text: "Protease-Rast"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-                TextField {id: tfProtT2; selectByMouse: true; text: model.at(currentIndex, 265); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
-                TextField {id: tfProtD2; selectByMouse: true; text: model.at(currentIndex, 266); font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+                            Text {id: tDura2; text: "Braudauer [Min]"; leftPadding: 20; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            Text {id: ttDura2; text: model.at(currentIndex, 260); color: "white"; font.pointSize: 14; Layout.leftMargin: tAmount2.leftPadding}
+                        }
 
-                Text {id: tMaltT2; text: "Maltose-Rast"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-                TextField {id: tfMaltT2; selectByMouse: true; text: model.at(currentIndex, 267); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
-                TextField {id: tfMaltD2; selectByMouse: true; text: model.at(currentIndex, 268); font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+                        GridLayout {
+                            Layout.alignment: Qt.AlignTop
+                            Layout.topMargin: 10
+                            columns: 3
+                            columnSpacing: 30
+                            rowSpacing: 13
 
-                Text {id: tSugT2; text: "Zucker-Rast"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-                TextField {id: tfSugT2; selectByMouse: true; text: model.at(currentIndex, 269); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
-                TextField {id: tfSugD2; selectByMouse: true; text: model.at(currentIndex, 270); font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+                            Text {id: tRest2; leftPadding: 10; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            Text {id: tTemp2; text: "[°C]"; leftPadding: 10; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            Text {id: tbDura2; text: "[Min]"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
 
-                Text {id: tEndT2; text: "Abmaischen"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-                TextField {id: tfEndT2; selectByMouse: true; text: model.at(currentIndex, 271); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
-                Text {id: tfEndD2; text: "0"; color: "white"; font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+                            Text {id: tStartT2; text: "Einmaischen"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            TextField {id: tfStartT2; selectByMouse: true; text: model.at(currentIndex, 261); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
+                            TextField {id: tfStartD2; selectByMouse: true; text: model.at(currentIndex, 262); font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+
+                            //                Text {id: tGlucT2; text: "Glukanase-Rast"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            //                TextField {id: tfGlucT2; selectByMouse: true; text: model.at(currentIndex, 263); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
+                            //                TextField {id: tfGlucD2; selectByMouse: true; text: model.at(currentIndex, 264); font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+
+                            Text {id: tFeruT2; text: "Ferula-Rast"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            TextField {id: tfFeruT2; selectByMouse: true; text: model.at(currentIndex, 263); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
+                            TextField {id: tfFeruD2; selectByMouse: true; text: model.at(currentIndex, 264); font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+
+                            Text {id: tProtT2; text: "Protease-Rast"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            TextField {id: tfProtT2; selectByMouse: true; text: model.at(currentIndex, 265); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
+                            TextField {id: tfProtD2; selectByMouse: true; text: model.at(currentIndex, 266); font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+
+                            Text {id: tMaltT2; text: "Maltose-Rast"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            TextField {id: tfMaltT2; selectByMouse: true; text: model.at(currentIndex, 267); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
+                            TextField {id: tfMaltD2; selectByMouse: true; text: model.at(currentIndex, 268); font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+
+                            Text {id: tSugT2; text: "Zucker-Rast"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            TextField {id: tfSugT2; selectByMouse: true; text: model.at(currentIndex, 269); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
+                            TextField {id: tfSugD2; selectByMouse: true; text: model.at(currentIndex, 270); font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+
+                            Text {id: tEndT2; text: "Abmaischen"; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                            TextField {id: tfEndT2; selectByMouse: true; text: model.at(currentIndex, 271); font.pointSize: 14; Layout.leftMargin: tTemp2.leftPadding}
+                            Text {id: tfEndD2; text: "0"; color: "white"; font.pointSize: 14; Layout.leftMargin: tbDura2.leftPadding}
+                        }
+                    }
+                }
             }
         }
     }
@@ -372,9 +405,9 @@ ListView {
                 Text {id: tfStartT3; color: "white"; text: model.at(currentIndex, 261); font.pointSize: 14; Layout.leftMargin: tTemp3.leftPadding}
                 Text {id: tfStartD3; color: "white"; text: model.at(currentIndex, 262); font.pointSize: 14; Layout.leftMargin: tbDura3.leftPadding}
 
-//                Text {id: tGlucT3; text: "Glukanase-Rast"; leftPadding: 10; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
-//                Text {id: tfGlucT3; color: "white"; text: model.at(currentIndex, 263); font.pointSize: 14; Layout.leftMargin: tTemp3.leftPadding}
-//                Text {id: tfGlucD3; color: "white"; text: model.at(currentIndex, 264); font.pointSize: 14; Layout.leftMargin: tbDura3.leftPadding}
+                //                Text {id: tGlucT3; text: "Glukanase-Rast"; leftPadding: 10; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
+                //                Text {id: tfGlucT3; color: "white"; text: model.at(currentIndex, 263); font.pointSize: 14; Layout.leftMargin: tTemp3.leftPadding}
+                //                Text {id: tfGlucD3; color: "white"; text: model.at(currentIndex, 264); font.pointSize: 14; Layout.leftMargin: tbDura3.leftPadding}
 
                 Text {id: tFeruT3; text: "Ferula-Rast"; leftPadding: 10; font.pointSize: 16; color: Material.color(Material.Indigo, 3)}
                 Text {id: tfFeruT3; color: "white"; text: model.at(currentIndex, 263); font.pointSize: 14; Layout.leftMargin: tTemp3.leftPadding}

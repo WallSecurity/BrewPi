@@ -1,7 +1,7 @@
 #include "CRecipeToCSV.h"
 #include "CRecipeList.h"
 #include "CRecipe.h"
-#include "globalsConstants.h"
+#include "CGlobals.h"
 #include <QFile>
 #include <QTextStream>
 #include <QDate>
@@ -9,7 +9,7 @@
 
 BrewRecipeToCSV::BrewRecipeToCSV()
 {
-    m_file = new QFile(CSVFILENAME);
+    m_file = new QFile("recipes.txt");
 }
 
 BrewRecipeToCSV::~BrewRecipeToCSV()
@@ -42,23 +42,23 @@ bool BrewRecipeToCSV::recipeListToCSV(BrewRecipeList *list)
 void BrewRecipeToCSV::RecipeToCSV(BrewRecipe* recipe)
 {
     QTextStream out(m_file);
-    out << recipe->getNumber() << CSVSEPARATOR;
-    out << recipe->getName() << CSVSEPARATOR;
-    out << recipe->getDate().toString("dd-MM-yyyy") << CSVSEPARATOR;
-    out << recipe->getAmount() << CSVSEPARATOR;
-    out << recipe->getBrewDura() << CSVSEPARATOR;
-    out << recipe->getStartMashTemp() << CSVSEPARATOR;
-    out << recipe->getStartMashDura() << CSVSEPARATOR;
-    out << recipe->getFerulaTemp() << CSVSEPARATOR;
-    out << recipe->getFerulaDura() << CSVSEPARATOR;
-    out << recipe->getProteaseTemp() << CSVSEPARATOR;
-    out << recipe->getProteaseDura() << CSVSEPARATOR;
-    out << recipe->getMaltoseTemp() << CSVSEPARATOR;
-    out << recipe->getMaltoseDura() << CSVSEPARATOR;
-    out << recipe->getSugarTemp() << CSVSEPARATOR;
-    out << recipe->getSugarDura() << CSVSEPARATOR;
-    out << recipe->getEndTemp() << CSVSEPARATOR;
-    out << recipe->getEndDura() << CSVSEPARATOR;
+    out << recipe->getNumber() << ",";
+    out << recipe->getName() << ",";
+    out << recipe->getDate().toString("dd-MM-yyyy") << ",";
+    out << recipe->getAmount() << ",";
+    out << recipe->getBrewDura() << ",";
+    out << recipe->getStartMashTemp() << ",";
+    out << recipe->getStartMashDura() << ",";
+    out << recipe->getFerulaTemp() << ",";
+    out << recipe->getFerulaDura() << ",";
+    out << recipe->getProteaseTemp() << ",";
+    out << recipe->getProteaseDura() << ",";
+    out << recipe->getMaltoseTemp() << ",";
+    out << recipe->getMaltoseDura() << ",";
+    out << recipe->getSugarTemp() << ",";
+    out << recipe->getSugarDura() << ",";
+    out << recipe->getEndTemp() << ",";
+    out << recipe->getEndDura() << ",";
     out << endl;
 }
 
@@ -92,7 +92,7 @@ BrewRecipe* BrewRecipeToCSV::csvToRecipe(QString line)
     try {
         BrewRecipe *recipe = new BrewRecipe();
         QStringList lineList;
-        lineList = line.split(CSVSEPARATOR);
+        lineList = line.split(",");
         enum {number, name, date, amount, brewDura,startTemp, startDura,
               ferulaTemp, ferulaDura, proteaseTemp, proteaseDura,
               maltoseTemp, maltoseDura, sugarTemp, sugarDura, endTemp};
