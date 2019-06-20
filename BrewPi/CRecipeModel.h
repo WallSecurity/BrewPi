@@ -5,6 +5,8 @@
 
 class BrewRecipeList;
 class BrewRecipe;
+class Globals;
+
 Q_DECLARE_METATYPE(QModelIndex)
 
 class BrewRecipeModel : public QAbstractListModel
@@ -13,7 +15,7 @@ class BrewRecipeModel : public QAbstractListModel
     Q_PROPERTY(BrewRecipeList *list READ getList WRITE setList)
 
 public:
-    explicit BrewRecipeModel(QObject *parent = nullptr);
+    BrewRecipeModel(QObject *parent = nullptr);
 
     virtual ~BrewRecipeModel() override;
 
@@ -76,6 +78,8 @@ public:
 
 private:
     BrewRecipeList *m_list;
+
+    const Globals *m_globals;
 };
 
 #endif // BREWRECIPEMODEL_H

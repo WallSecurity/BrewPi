@@ -2,7 +2,6 @@
 #include "CRecipeList.h"
 #include "CRecipe.h"
 #include "CMashRest.h"
-#include "CGlobals.h"
 
 BrewRecipeModel::BrewRecipeModel(QObject *parent)
     : QAbstractListModel(parent)

@@ -5,11 +5,12 @@
 #include <QVector>
 
 
-BrewRecipeGraph::BrewRecipeGraph(QObject *parent) :
+BrewRecipeGraph::BrewRecipeGraph(const Globals &globals, QObject *parent) :
     QObject(parent)
 {
     m_series = new QLineSeries();
     m_recipe = new BrewRecipe();
+    m_globals = &globals;
 }
 
 BrewRecipeGraph::~BrewRecipeGraph()
@@ -108,7 +109,7 @@ void BrewRecipeGraph::recipeToSeries(QString startT, QString startD, QString fer
 
     //ferula
     if (ferulaT.toDouble() > 0) {
-        heat.rx() = rest.x() + ((ferulaT.toDouble() - rest.y()) * HEATING_MULTIPLIERSF);
+        heat.rx() = rest.x() + ((ferulaT.toDouble() - rest.y()) * m_globals->heatingMultiplierStartFerula());
         heat.ry() = ferulaT.toDouble();
         m_series->append(heat); //heat to protease rest
 
@@ -119,7 +120,7 @@ void BrewRecipeGraph::recipeToSeries(QString startT, QString startD, QString fer
 
     //protease
     if (protT.toDouble() > 0) {
-        heat.rx() = rest.x() + ((protT.toDouble() - rest.y()) * HEATING_MULTIPLIERFP);
+        heat.rx() = rest.x() + ((protT.toDouble() - rest.y()) * m_globals->heatingMultiplierFerulaProtease());
         heat.ry() = protT.toDouble();
         m_series->append(heat); //heat to maltose rest
 
@@ -130,7 +131,7 @@ void BrewRecipeGraph::recipeToSeries(QString startT, QString startD, QString fer
 
     //maltose
     if (maltT.toDouble() > 0) {
-        heat.rx() = rest.x() + ((maltT.toDouble() - rest.y()) * HEATING_MULTIPLIERPM);
+        heat.rx() = rest.x() + ((maltT.toDouble() - rest.y()) * m_globals->heatingMultiplierProteaseMaltose());
         heat.ry() = maltT.toDouble();
         m_series->append(heat); //heat to sugar rest
 
@@ -141,7 +142,7 @@ void BrewRecipeGraph::recipeToSeries(QString startT, QString startD, QString fer
 
     //sugar
     if (sugarT.toDouble() > 0) {
-        heat.rx() = rest.x() + ((sugarT.toDouble() - rest.y()) * HEATING_MULTIPLIERMS);
+        heat.rx() = rest.x() + ((sugarT.toDouble() - rest.y()) * m_globals->heatingMultiplierMaltoseSugar());
         heat.ry() = sugarT.toDouble();
         m_series->append(heat); //heat to end
 
@@ -152,7 +153,7 @@ void BrewRecipeGraph::recipeToSeries(QString startT, QString startD, QString fer
 
     //end
     if (endT.toDouble() > 0) {
-        heat.rx() = rest.x() + ((endT.toDouble() - rest.y()) * HEATING_MULTIPLIERSE);
+        heat.rx() = rest.x() + ((endT.toDouble() - rest.y()) * m_globals->heatingMultiplierSugarEnd());
         heat.ry() = endT.toDouble();
         m_series->append(heat); //end
 
@@ -188,6 +189,8 @@ void BrewRecipeGraph::setRecipe(QString number, QString name, QString date, QStr
 
     m_recipe = new BrewRecipe(number.toInt(), name, nDate, amount.toDouble(),
                                         *startMash, *ferula, *protease, *maltose, *sugar, *end);
+
+    qDebug() << "Recipe successfuly set up";
 
     m_recipe->setBrewDura();
 

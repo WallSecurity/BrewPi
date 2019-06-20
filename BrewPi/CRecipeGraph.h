@@ -5,6 +5,7 @@
 #include <QtCharts>
 
 class BrewRecipe;
+class Globals;
 
 using namespace QtCharts;
 
@@ -13,7 +14,7 @@ class BrewRecipeGraph : public QObject
     Q_OBJECT
     Q_PROPERTY(QLineSeries *series READ series WRITE setSeries NOTIFY seriesChanged)
 public:
-    explicit BrewRecipeGraph(QObject *parent = nullptr);
+    explicit BrewRecipeGraph(const Globals &globals, QObject *parent = nullptr);
 
     virtual ~BrewRecipeGraph();
 
@@ -138,6 +139,11 @@ private:
      * \brief recipe holds the currently loaded recipe to brew
      */
     BrewRecipe *m_recipe;
+
+    /*!
+     * \brief m_globals global variables manager
+     */
+    const Globals *m_globals;
 };
 
 #endif // CRECIPEGRAPH_H

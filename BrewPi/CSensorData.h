@@ -5,6 +5,7 @@
 
 class QPointF;
 class QTimer;
+class Globals;
 
 /*!
  * \brief The BrewTemperatureGraph class creates a simple graph to represent the current temperature
@@ -16,7 +17,7 @@ class BrewSensorData: public QObject
     //Q_PROPERTY(QString temperature READ temperature WRITE setTemperature NOTIFY temperatureChanged)
 
 public:
-    BrewSensorData(QObject *parent = nullptr);
+    BrewSensorData(const Globals &globals, QObject *parent = nullptr);
 
     virtual ~BrewSensorData();
 
@@ -105,6 +106,11 @@ private:
       * \brief m_speed
       * */
     QString m_speed;
+
+    /*!
+     * \brief m_globals global variables manager
+     */
+    const Globals *m_globals;
 };
 
 #endif // CTEMPERATUREDATA_H

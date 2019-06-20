@@ -23,6 +23,9 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon("../BrewPi/pictures/windowIcon.jpg"));
 
+    Globals *globals = new Globals();
+    qDebug() << "Globals initialised";
+
     qmlRegisterType<BrewRecipeModel>("brewpi.recipemodel", 1, 0, "BrewRecipeModel");
     qmlRegisterUncreatableType<BrewRecipeList>("brewpi.recipelist", 1, 0, "BrewRecipeList",
                                                "BrewRecipeList cannot be created in qml");
@@ -32,12 +35,12 @@ int main(int argc, char *argv[])
 
     qDebug() << "Types registered";
 
-    BrewSensorData *temp = new BrewSensorData();
+    BrewSensorData *temp = new BrewSensorData(*globals);
     qDebug() << "Sensor data created";
 
-    BrewRecipeGraph *recipeGraph = new BrewRecipeGraph();
+    BrewRecipeGraph *recipeGraph = new BrewRecipeGraph(*globals);
     qDebug() << "Recipe graph created";
-    BrewProgress *progress = new BrewProgress();
+    BrewProgress *progress = new BrewProgress(*globals);
     qDebug() << "Brew Progress created";
 
     BrewRecipeToCSV *csvFile = new BrewRecipeToCSV();
@@ -59,6 +62,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("RecipeGraph", recipeGraph);
     engine.rootContext()->setContextProperty("SensorData", temp);
     engine.rootContext()->setContextProperty("ProgressClass", progress);
+    engine.rootContext()->setContextProperty("Globals", globals);
     qDebug() << "Properties set";
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     qDebug() << "engine started";

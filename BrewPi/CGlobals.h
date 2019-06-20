@@ -3,11 +3,11 @@
 
 #include <QObject>
 
-class CGlobals : public QObject
+class Globals : public QObject
 {
     Q_OBJECT
 public:
-    explicit CGlobals(QObject *parent = nullptr);
+    explicit Globals(QObject *parent = nullptr);
 
     Q_INVOKABLE qreal heatingMultiplierStartFerula() const;
     Q_INVOKABLE void setHeatingMultiplierStartFerula(const qreal &heatingMultiplierStartFerula);
@@ -35,10 +35,6 @@ public:
 
     Q_INVOKABLE qreal motorspeedNormal() const;
     Q_INVOKABLE void setMotorspeedNormal(const qreal &motorspeedNormal);
-
-signals:
-
-public slots:
 
 private:
     qreal m_heatingMultiplierStartFerula;

@@ -6,13 +6,14 @@
 #include <iostream>
 #include <QDebug>
 
-BrewSensorData::BrewSensorData(QObject *parent) :
+BrewSensorData::BrewSensorData(const Globals &globals, QObject *parent) :
     QObject (parent),
     m_totalTime(0),
-    m_temperature("00.00")
+    m_temperature("00.00"),
+    m_globals(&globals)
 {
     char TRANS_MODE[] = {'8', 'N', '1', 0};
-    RS232_OpenComport(COMPORT_NUMBER, 9600, TRANS_MODE);
+    RS232_OpenComport(m_globals->comportNumber(), 9600, TRANS_MODE);
     m_intervall = new QTimer(this);
     m_total = new QTimer(this);
     m_intervallNoConnect = new QTimer(this);
@@ -26,7 +27,7 @@ BrewSensorData::~BrewSensorData()
     delete m_intervall;
     delete m_total;
     delete m_intervallNoConnect;
-    RS232_CloseComport(COMPORT_NUMBER);
+    RS232_CloseComport(m_globals->comportNumber());
 }
 
 void BrewSensorData::setTemperature()
@@ -37,9 +38,9 @@ void BrewSensorData::setTemperature()
     char *str = tempArr.data();
     unsigned char buf[6];
     {
-        RS232_cputs(COMPORT_NUMBER, str);
+        RS232_cputs(m_globals->comportNumber(), str);
 
-        n = RS232_PollComport(COMPORT_NUMBER, buf, 5);
+        n = RS232_PollComport(m_globals->comportNumber(), buf, 5);
         if (n>0) {
             m_temperature = QString((char *)buf);
             qDebug() << "m_temp: " <<m_temperature;
@@ -59,9 +60,9 @@ void BrewSensorData::setTemperatureNoConnect()
     char *str = tempArr.data();
     unsigned char buf[6];
     {
-        RS232_cputs(COMPORT_NUMBER, str);
+        RS232_cputs(m_globals->comportNumber(), str);
 
-        n = RS232_PollComport(COMPORT_NUMBER, buf, 5);
+        n = RS232_PollComport(m_globals->comportNumber(), buf, 5);
         if (n>0) {
             m_temperature = QString((char *)buf);
             qDebug() << "m_temp: " <<m_temperature;
@@ -81,7 +82,7 @@ void BrewSensorData::setMotorSpeed(QString speed)
         speed += "\n";
         QByteArray speedArray = speed.toLocal8Bit();
         char *str = speedArray.data();
-        RS232_cputs(COMPORT_NUMBER, str);
+        RS232_cputs(m_globals->comportNumber(), str);
     }
 }
 
@@ -91,18 +92,18 @@ void BrewSensorData::setAutoMotorSpeed(QString step)
     double realSpeed;
     QString speed;
     if (step.startsWith("Aufheizen", Qt::CaseInsensitive)) {
-        realSpeed = MOTORSPEEDHEAT * 2.55;
-        m_speed = QString::number(MOTORSPEEDHEAT);
+        realSpeed = m_globals->motorspeedHeat() * 2.55;
+        m_speed = QString::number(m_globals->motorspeedHeat());
     } else {
-        realSpeed = MOTORSPEEDNORMAL * 2.55;
-        m_speed = QString::number(MOTORSPEEDNORMAL);
+        realSpeed = m_globals->motorspeedNormal() * 2.55;
+        m_speed = QString::number(m_globals->motorspeedNormal());
     }
     speed = QString::number(realSpeed);
     if (speed.toInt() >= 0 && speed.toInt() <= 255) {
         speed += "\n";
         QByteArray speedArray = speed.toLocal8Bit();
         char *str = speedArray.data();
-        RS232_cputs(COMPORT_NUMBER, str);
+        RS232_cputs(m_globals->comportNumber(), str);
     }
 }
 
@@ -117,7 +118,7 @@ bool BrewSensorData::setupTimers(int length)
         m_totalTime = length * 60000;
         m_total->setSingleShot(true);
         m_total->start(m_totalTime);
-        m_intervall->start(INTERVALL_TIMER * 1000);
+        m_intervall->start(m_globals->intervallTimer() * 1000);
         return true;
     } else {
         return false;
@@ -137,7 +138,7 @@ bool BrewSensorData::endTimers()
 
 void BrewSensorData::setIntervall()
 {
-    m_intervallNoConnect->start(INTERVALL_TIMER * 1000);
+    m_intervallNoConnect->start(m_globals->intervallTimer() * 1000);
 }
 
 void BrewSensorData::endIntervall()

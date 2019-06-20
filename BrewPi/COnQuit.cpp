@@ -6,7 +6,6 @@ OnQuit::OnQuit(QObject *parent) :
     QObject(parent),
     m_list(nullptr)
 {
-
 }
 
 OnQuit::~OnQuit()

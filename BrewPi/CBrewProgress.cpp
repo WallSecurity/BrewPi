@@ -4,9 +4,11 @@
 #include "CGlobals.h"
 #include "CMashRest.h"
 #include <QList>
+#include <QDebug>
 
-BrewProgress::BrewProgress()
+BrewProgress::BrewProgress(const Globals &globals)
 {
+    m_globals = &globals;
     m_ProgressList = new QList<BrewProgressData*>();
     m_recipe = new BrewRecipe();
 }
@@ -132,12 +134,12 @@ bool BrewProgress::initializeProgressQ()
         if (m_recipe->getFerulaDura() > 0) {
             if (!m_ProgressList->isEmpty()) {
                 if (m_recipe->getFerulaTemp() - m_ProgressList->last()->temperature() > 0) {
-                    heatDuration = (m_recipe->getFerulaTemp() - m_ProgressList->last()->temperature()) * HEATING_MULTIPLIERSF;
+                    heatDuration = (m_recipe->getFerulaTemp() - m_ProgressList->last()->temperature()) * m_globals->heatingMultiplierStartFerula();
                 } else {
                     heatDuration = 0;
                 }
             } else {
-                heatDuration = m_recipe->getFerulaTemp() * HEATING_MULTIPLIERSF;
+                heatDuration = m_recipe->getFerulaTemp() * m_globals->heatingMultiplierStartFerula();
             }
             if (heatDuration > 0) {
                 q_data = new BrewProgressData("Aufheizen -> Weizen-Rast", m_recipe->getFerulaTemp(), heatDuration);
@@ -151,12 +153,12 @@ bool BrewProgress::initializeProgressQ()
         if (m_recipe->getProteaseDura() > 0) {
             if (!m_ProgressList->isEmpty()) {
                 if (m_recipe->getProteaseTemp() - m_ProgressList->last()->temperature() > 0) {
-                    heatDuration = (m_recipe->getProteaseTemp() - m_ProgressList->last()->temperature()) * HEATING_MULTIPLIERFP;
+                    heatDuration = (m_recipe->getProteaseTemp() - m_ProgressList->last()->temperature()) * m_globals->heatingMultiplierFerulaProtease();
                 } else {
                     heatDuration = 0;
                 }
             } else {
-                heatDuration = m_recipe->getProteaseTemp() * HEATING_MULTIPLIERFP;
+                heatDuration = m_recipe->getProteaseTemp() * m_globals->heatingMultiplierFerulaProtease();
             }
             if (heatDuration > 0) {
                 q_data = new BrewProgressData("Aufheizen -> Protease-Rast", m_recipe->getProteaseTemp(), heatDuration);
@@ -170,12 +172,12 @@ bool BrewProgress::initializeProgressQ()
         if (m_recipe->getMaltoseDura() > 0) {
             if (!m_ProgressList->isEmpty()) {
                 if (m_recipe->getMaltoseTemp() - m_ProgressList->last()->temperature() > 0) {
-                    heatDuration = (m_recipe->getMaltoseTemp() - m_ProgressList->last()->temperature()) * HEATING_MULTIPLIERPM;
+                    heatDuration = (m_recipe->getMaltoseTemp() - m_ProgressList->last()->temperature()) * m_globals->heatingMultiplierProteaseMaltose();
                 } else {
                     heatDuration = 0;
                 }
             } else {
-                heatDuration = m_recipe->getMaltoseTemp() * HEATING_MULTIPLIERPM;
+                heatDuration = m_recipe->getMaltoseTemp() * m_globals->heatingMultiplierProteaseMaltose();
             }
             if (heatDuration > 0) {
                 q_data = new BrewProgressData("Aufheizen -> Maltose-Rast", m_recipe->getMaltoseTemp(), heatDuration);
@@ -189,12 +191,12 @@ bool BrewProgress::initializeProgressQ()
         if (m_recipe->getSugarDura() > 0) {
             if (!m_ProgressList->isEmpty()) {
                 if (m_recipe->getSugarTemp() - m_ProgressList->last()->temperature() > 0) {
-                    heatDuration = (m_recipe->getSugarTemp() - m_ProgressList->last()->temperature()) * HEATING_MULTIPLIERMS;
+                    heatDuration = (m_recipe->getSugarTemp() - m_ProgressList->last()->temperature()) * m_globals->heatingMultiplierMaltoseSugar();
                 } else {
                     heatDuration = 0;
                 }
             } else {
-                heatDuration = m_recipe->getSugarTemp() * HEATING_MULTIPLIERMS;
+                heatDuration = m_recipe->getSugarTemp() * m_globals->heatingMultiplierMaltoseSugar();
             }
             if (heatDuration > 0) {
                 q_data = new BrewProgressData("Aufheizen -> Zucker-Rast", m_recipe->getSugarTemp(), heatDuration);
@@ -208,18 +210,19 @@ bool BrewProgress::initializeProgressQ()
         if (m_recipe->getEndTemp() > 0) {
             if (!m_ProgressList->isEmpty()) {
                 if (m_recipe->getEndTemp() - m_ProgressList->last()->temperature() > 0) {
-                    heatDuration = (m_recipe->getEndTemp() - m_ProgressList->last()->temperature()) * HEATING_MULTIPLIERSE;
+                    heatDuration = (m_recipe->getEndTemp() - m_ProgressList->last()->temperature()) * m_globals->heatingMultiplierSugarEnd();
                 } else {
                     heatDuration = 0;
                 }
             } else {
-                heatDuration = m_recipe->getEndTemp() * HEATING_MULTIPLIERSE;
+                heatDuration = m_recipe->getEndTemp() * m_globals->heatingMultiplierSugarEnd();
             }
             if (heatDuration > 0) {
                 q_data = new BrewProgressData("Aufheizen -> Abmaischen", m_recipe->getEndTemp(), heatDuration);
                 m_ProgressList->append(q_data);
             }
         }
+
         delete q_data;
         return true;
     }

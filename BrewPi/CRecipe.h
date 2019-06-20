@@ -50,11 +50,6 @@ public:
                mashRest sugar,
                mashRest end);
 
-    /*!
-     * \brief BrewRecipe copy another recipe
-     */
-    BrewRecipe (const BrewRecipe& other);
-
     virtual ~BrewRecipe();
 
     /*!

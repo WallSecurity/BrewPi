@@ -1,9 +1,9 @@
 #include "CRecipe.h"
 #include "CMashRest.h"
 #include <QDate>
-#include "CGlobals.h"
 #include "CBrewProgress.h"
 #include <qdebug.h>
+#include "CGlobals.h"
 
 BrewRecipe::BrewRecipe():
     m_number(0),
@@ -35,22 +35,6 @@ BrewRecipe::BrewRecipe(int number, QString name, QDate date, qreal amount, mashR
     m_maltose = new mashRest(maltose);
     m_sugar = new mashRest(sugar);
     m_end = new mashRest(end);
-}
-
-BrewRecipe::BrewRecipe(const BrewRecipe &other) :
-    QObject (this)
-{
-    m_number = other.getNumber();
-    m_name = other.getName();
-    m_date = other.getDate();
-    m_brewDura = other.getBrewDura();
-    m_startMash = other.getStartMash();
-    //    m_glucanase = other.getGlucanase();
-    m_ferula = other.getFerula();
-    m_protease = other.getProtease();
-    m_maltose = other.getMaltose();
-    m_sugar = other.getSugar();
-    m_end = other.getEnd();
 }
 
 BrewRecipe::~BrewRecipe()
@@ -112,7 +96,8 @@ qreal BrewRecipe::getBrewDura() const
 void BrewRecipe::setBrewDura()
 {
     m_brewDura = 0;
-    BrewProgress *prog = new BrewProgress();
+    Globals *globals = new Globals();
+    BrewProgress *prog = new BrewProgress(*globals);
     prog->setRecipe(QString::number(m_number), m_name,
                     m_date.toString(), QString::number(m_Amount),
                     QString::number(m_startMash->getTemperature()),

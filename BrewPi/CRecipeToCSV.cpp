@@ -1,7 +1,6 @@
 #include "CRecipeToCSV.h"
 #include "CRecipeList.h"
 #include "CRecipe.h"
-#include "CGlobals.h"
 #include <QFile>
 #include <QTextStream>
 #include <QDate>

@@ -5,6 +5,7 @@
 
 class BrewRecipe;
 class BrewProgressData;
+class Globals;
 
 /*!
  * \brief The BrewProgress class class to handle the progress bar logic
@@ -14,9 +15,10 @@ class BrewProgress : public QObject
     Q_OBJECT
 public:
     /*!
-     * \brief BrewProgress standard constructor
+     * \brief BrewProgress extended constructor dealing with global variables
+     * \param globals reference to globalvariables class
      */
-    BrewProgress();
+    BrewProgress(const Globals &globals);
 
     /*!
      * \brief ~BrewProgress standard deconstructor
@@ -121,6 +123,11 @@ private:
      * \return true, if initialized successful
      */
     bool initializeProgressQ();
+
+    /*!
+     * \brief m_globals global variables manager
+     */
+    const Globals *m_globals;
 };
 
 #endif // CBREWPROGRESS_H

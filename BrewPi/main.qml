@@ -107,7 +107,7 @@ ApplicationWindow {
 
         TabButton {
             id: settingsButton
-            text: "Einstellungen"
+            text: "Optionen"
             font.pixelSize: 30
             height: implicitHeight
         }

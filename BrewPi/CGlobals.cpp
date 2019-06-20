@@ -1,96 +1,106 @@
 #include "CGlobals.h"
 
-CGlobals::CGlobals(QObject *parent) : QObject(parent)
+Globals::Globals(QObject *parent) :
+    QObject(parent),
+    m_heatingMultiplierStartFerula(1.0),
+    m_heatingMultiplierFerulaProtease(1.0),
+    m_heatingMultiplierProteaseMaltose(1.0),
+    m_heatingMultiplierMaltoseSugar(1.0),
+    m_heatingMultiplierSugarEnd(1.0),
+    m_comportNumber(24),
+    m_intervallTimer(1.0),
+    m_motorspeedHeat(75.0),
+    m_motorspeedNormal(50.0)
 {
 
 }
 
-qreal CGlobals::heatingMultiplierStartFerula() const
+qreal Globals::heatingMultiplierStartFerula() const
 {
     return m_heatingMultiplierStartFerula;
 }
 
-void CGlobals::setHeatingMultiplierStartFerula(const qreal &heatingMultiplierStartFerula)
+void Globals::setHeatingMultiplierStartFerula(const qreal &heatingMultiplierStartFerula)
 {
     m_heatingMultiplierStartFerula = heatingMultiplierStartFerula;
 }
 
-qreal CGlobals::heatingMultiplierFerulaProtease() const
+qreal Globals::heatingMultiplierFerulaProtease() const
 {
     return m_heatingMultiplierFerulaProtease;
 }
 
-void CGlobals::setHeatingMultiplierFerulaProtease(const qreal &heatingMultiplierFerulaProtease)
+void Globals::setHeatingMultiplierFerulaProtease(const qreal &heatingMultiplierFerulaProtease)
 {
     m_heatingMultiplierFerulaProtease = heatingMultiplierFerulaProtease;
 }
 
-qreal CGlobals::heatingMultiplierProteaseMaltose() const
+qreal Globals::heatingMultiplierProteaseMaltose() const
 {
     return m_heatingMultiplierProteaseMaltose;
 }
 
-void CGlobals::setHeatingMultiplierProteaseMaltose(const qreal &heatingMultiplierProteaseMaltose)
+void Globals::setHeatingMultiplierProteaseMaltose(const qreal &heatingMultiplierProteaseMaltose)
 {
     m_heatingMultiplierProteaseMaltose = heatingMultiplierProteaseMaltose;
 }
 
-qreal CGlobals::heatingMultiplierMaltoseSugar() const
+qreal Globals::heatingMultiplierMaltoseSugar() const
 {
     return m_heatingMultiplierMaltoseSugar;
 }
 
-void CGlobals::setHeatingMultiplierMaltoseSugar(const qreal &heatingMultiplierMaltoseSugar)
+void Globals::setHeatingMultiplierMaltoseSugar(const qreal &heatingMultiplierMaltoseSugar)
 {
     m_heatingMultiplierMaltoseSugar = heatingMultiplierMaltoseSugar;
 }
 
-qreal CGlobals::heatingMultiplierSugarEnd() const
+qreal Globals::heatingMultiplierSugarEnd() const
 {
     return m_heatingMultiplierSugarEnd;
 }
 
-void CGlobals::setHeatingMultiplierSugarEnd(const qreal &heatingMultiplierSugarEnd)
+void Globals::setHeatingMultiplierSugarEnd(const qreal &heatingMultiplierSugarEnd)
 {
     m_heatingMultiplierSugarEnd = heatingMultiplierSugarEnd;
 }
 
-int CGlobals::comportNumber() const
+int Globals::comportNumber() const
 {
     return m_comportNumber;
 }
 
-void CGlobals::setComportNumber(int comportNumber)
+void Globals::setComportNumber(int comportNumber)
 {
     m_comportNumber = comportNumber;
 }
 
-int CGlobals::intervallTimer() const
+int Globals::intervallTimer() const
 {
     return m_intervallTimer;
 }
 
-void CGlobals::setIntervallTimer(int intervallTimer)
+void Globals::setIntervallTimer(int intervallTimer)
 {
     m_intervallTimer = intervallTimer;
 }
 
-qreal CGlobals::motorspeedHeat() const
+qreal Globals::motorspeedHeat() const
 {
     return m_motorspeedHeat;
 }
 
-void CGlobals::setMotorspeedHeat(const qreal &motorspeedHeat)
+void Globals::setMotorspeedHeat(const qreal &motorspeedHeat)
 {
     m_motorspeedHeat = motorspeedHeat;
 }
 
-qreal CGlobals::motorspeedNormal() const
+qreal Globals::motorspeedNormal() const
 {
     return m_motorspeedNormal;
 }
 
-void CGlobals::setMotorspeedNormal(const qreal &motorspeedNormal)
+void Globals::setMotorspeedNormal(const qreal &motorspeedNormal)
 {
     m_motorspeedNormal = motorspeedNormal;
 }
