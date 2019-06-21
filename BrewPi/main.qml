@@ -498,6 +498,10 @@ ApplicationWindow {
             id: settingPage
             width: window.width
             height: window.height - tabBar.height
+
+            SettingForm {
+                id: settingForm
+            }
         }
     }
 }
