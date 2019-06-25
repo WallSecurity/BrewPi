@@ -24,6 +24,15 @@ bool BrewProgress::empty()
     return m_ProgressList->isEmpty();
 }
 
+bool BrewProgress::isHeatPhase(int index)
+{
+    if (name(index).startsWith("Aufheizen", Qt::CaseInsensitive)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 bool BrewProgress::removeFirst()
 {
     if (m_ProgressList->isEmpty()) {
@@ -109,7 +118,7 @@ void BrewProgress::setRecipe(QString number, QString name, QString date, QString
     mashRest *end = new mashRest(endT.toDouble(), endD.toDouble());
 
     m_recipe = new BrewRecipe(number.toInt(), name, nDate, amount.toDouble(),
-                                        *startMash, *ferula, *protease, *maltose, *sugar, *end);
+                              *startMash, *ferula, *protease, *maltose, *sugar, *end);
 
     initializeProgressQ();
 }

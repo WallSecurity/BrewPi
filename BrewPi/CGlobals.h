@@ -3,11 +3,18 @@
 
 #include <QObject>
 
+class QFile;
+
 class Globals : public QObject
 {
     Q_OBJECT
 public:
     explicit Globals(QObject *parent = nullptr);
+    virtual ~Globals();
+
+    Q_INVOKABLE bool saveSettingsToFile();
+
+    bool loadSettingsFromFile();
 
     Q_INVOKABLE qreal heatingMultiplierStartFerula() const;
     Q_INVOKABLE void setHeatingMultiplierStartFerula(const qreal &heatingMultiplierStartFerula);
@@ -36,6 +43,8 @@ public:
     Q_INVOKABLE qreal motorspeedNormal() const;
     Q_INVOKABLE void setMotorspeedNormal(const qreal &motorspeedNormal);
 
+
+
 private:
     qreal m_heatingMultiplierStartFerula;
     qreal m_heatingMultiplierFerulaProtease;
@@ -46,6 +55,11 @@ private:
     int m_intervallTimer; //1.0
     qreal m_motorspeedHeat; //75.0
     qreal m_motorspeedNormal; //50.0
+
+    /*!
+     * \brief m_file local file to save/load data to/from
+     */
+    QFile *m_file;
 };
 
 #endif // CGLOBALS_H

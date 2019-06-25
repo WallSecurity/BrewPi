@@ -16,8 +16,6 @@ ApplicationWindow {
     height: 600
     title: qsTr("BrewPi")
 
-    property real brewDuraAch: 0
-
     Connections {
         target: SensorData
         onTemperatureChanged: {
@@ -44,10 +42,10 @@ ApplicationWindow {
             brewProgress.to = ProgressClass.duration(0)
             brewTargetTemp.text = ProgressClass.temperature(0)
             progressTitle.text = ProgressClass.name(0)
+            brewProgressTotal.stop()
             brewProgressTotal.interval = ProgressClass.duration(0) * 60000
             setAutoMotorSpeed()
             brewProgressTotal.start()
-            ProgressClass.removeFirst()
         } else {
             brewDurationRem.text = "0 Minuten"
             stopButton.visible = false
@@ -58,7 +56,7 @@ ApplicationWindow {
             brewTempTimer.stop()
             brewProgressTotal.stop()
             brewDurationTimer.stop()
-            SensorData.endTimers()
+            SensorData.endBrewProcess()
             SensorData.setMotorSpeed(0)
             speedSlider.value = SensorData.getSpeed()
             setUpEndScreen()
@@ -73,6 +71,31 @@ ApplicationWindow {
             progressTitleNext.visible = false
             progressTitleNextStep.visible = false
             brewProgressNext.visible = false
+        }
+    }
+
+    function checkTargetReachedOnChanged() {
+        if (ProgressClass.isHeatPhase(0)) {
+            if (Number(brewCurrentTemp.text) >= Number(brewTargetTemp.text)) {
+                brewDurationTotal.text = Math.round((Number(brewDurationTotal.text) - (ProgressClass.duration(0) * (1 - brewProgress.value)))*100)/100
+                brewDurationRem.text = Math.round((Number(brewDurationRem.text) - (ProgressClass.duration(0) * (1 - brewProgress.value)))*100)/100
+                ProgressClass.removeFirst()
+                setUpProgressTimer()
+                setUpNextProgress()
+            }
+        }
+    }
+
+    function repeatUntilTargetReached() {
+        if (ProgressClass.isHeatPhase(0)) {
+            brewDurationTotal.text = Math.round((Number(brewDurationTotal.text) + ProgressClass.duration(0))*100)/100
+            brewDurationRem.text = Math.round((Number(brewDurationRem.text) + ProgressClass.duration(0))*100)/100
+            setUpProgressTimer()
+            setUpNextProgress()
+        } else {
+            ProgressClass.removeFirst()
+            setUpProgressTimer()
+            setUpNextProgress()
         }
     }
 
@@ -203,15 +226,12 @@ ApplicationWindow {
 
                     BrewProgressTimer {
                         id: brewProgressTimer
-                        onTriggered: brewProgress.value < brewProgress.to ? brewProgress.value += 1/600 : brewProgressTimer.stop()
+                        onTriggered: brewProgress.value <= brewProgress.to ? brewProgress.value += 1/600 : brewProgressTimer.stop()
                     }
 
                     BrewProgressTotalTimer {
                         id: brewProgressTotal
-                        onTriggered: {
-                            setUpNextProgress()
-                            setUpProgressTimer()
-                        }
+                        onTriggered: repeatUntilTargetReached()
                     }
                 }
 
@@ -252,8 +272,7 @@ ApplicationWindow {
                     BrewDurationTimer {
                         id: brewDurationTimer
                         onTriggered: {
-                            brewDuraAch += 1
-                            brewDurationRem.text = Math.round((RecipeGraph.getData(Enum.BrewDura) - brewDuraAch)*10) / 10 + " Minuten"
+                            brewDurationRem.text = Math.round((Number(brewDurationRem.text) - 1)*100) / 100
                         }
                     }
 
@@ -264,7 +283,8 @@ ApplicationWindow {
 
                 BrewTemperatureCurrent {
                     id: brewCurrentTemp
-                    color: (Number(brewCurrentTemp.text) < Number(brewTargetTemp.text) - 3) || (Number(brewCurrentTemp.text) > Number(brewTargetTemp.text) + 3) ? Material.color(Material.Red, 8) : Material.color(Material.Green, 8)
+                    color: (Number(brewCurrentTemp.text) <= Number(brewTargetTemp.text) - 3) || (Number(brewCurrentTemp.text) >= Number(brewTargetTemp.text) + 3) ? Material.color(Material.Red, 8) : Material.color(Material.Green, 8)
+                    onTextChanged: checkTargetReachedOnChanged()
 
                     BrewTemperatureTimer {
                         id: brewTempTimer
@@ -302,6 +322,7 @@ ApplicationWindow {
                         id: motorSwitch
                         checked: true
                         text: motorSwitch.checked ? "Auto" : "Manuell"
+                        onCheckedChanged: setAutoMotorSpeed()
                     }
 
                     BrewMotorSpeedSlider {
@@ -325,7 +346,6 @@ ApplicationWindow {
                         brewDurationTimer.start()
                         SensorData.setupTimers(RecipeGraph.getData(Enum.BrewDura))
                         setAutoMotorSpeed()
-                        ProgressClass.removeFirst()
                     }
                 }
                 BrewStopButton {
@@ -345,7 +365,6 @@ ApplicationWindow {
                         brewTempTimer.stop()
                         brewProgressTotal.stop()
                         brewDurationTimer.stop()
-                        brewDuraAch = 0
                         brewProgress.value = 0
                         SensorData.setMotorSpeed(0)
                         speedSlider.value = SensorData.getSpeed()
@@ -365,7 +384,6 @@ ApplicationWindow {
 
                 CookTargetTempSpinBox {
                     id: targetTempSpinBox
-
                 }
 
                 CookTargetDuraSpinBox {
@@ -413,7 +431,7 @@ ApplicationWindow {
 
                 BrewTemperatureCurrent {
                     id: cookTempCurrent
-                    color: (Number(cookTempCurrent.text) < Number(targetTempSpinBox.value) - 3) || (Number(cookTempCurrent.text) > Number(targetTempSpinBox.value) + 3) ? Material.color(Material.Red, 8) : Material.color(Material.Green, 8)
+                    color: (Number(cookTempCurrent.text) <= Number(targetTempSpinBox.value) - 3) || (Number(cookTempCurrent.text) >= Number(targetTempSpinBox.value) + 3) ? Material.color(Material.Red, 8) : Material.color(Material.Green, 8)
                     anchors.leftMargin: 0
                     anchors.topMargin: parent.height / 7.5
                 }
@@ -473,7 +491,7 @@ ApplicationWindow {
                     axisY.min = RecipeGraph.getMinY() - 4
                     axisY.max = RecipeGraph.getMaxY() + 4
                     welcome.visible = false
-                    brewDurationTotal.text = Math.round(RecipeGraph.getData(Enum.BrewDura)*10) / 10 + " Minuten"
+                    brewDurationTotal.text = Math.round(RecipeGraph.getData(Enum.BrewDura)*100) / 100
                     brewDurationRem.text = brewDurationTotal.text
                     brewProgress.to = ProgressClass.duration(0)
                     brewTargetTemp.text = ProgressClass.temperature(0)

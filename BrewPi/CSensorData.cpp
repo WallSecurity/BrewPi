@@ -36,7 +36,7 @@ void BrewSensorData::setTemperature()
     QString temp = "301\n";
     QByteArray tempArr = temp.toLocal8Bit();
     char *str = tempArr.data();
-    unsigned char buf[6];
+    unsigned char buf[5];
     {
         RS232_cputs(m_globals->comportNumber(), str);
 

@@ -32,6 +32,12 @@ public:
     bool empty();
 
     /*!
+     * \brief isHeatPhase checks, if we are currently in a heating phase
+     * \return true, if we are in a heating phase
+     */
+    Q_INVOKABLE bool isHeatPhase(int index);
+
+    /*!
      * \brief removeFirst removes first item and rearranges the remaining list
      * \return true, if successful
      */

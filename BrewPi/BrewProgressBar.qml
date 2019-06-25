@@ -44,12 +44,14 @@ ProgressBar {
         anchors.right: pBar.right
         text: Math.round(pBar.to*10) / 10 + " [min]"
     }
+
+    //center
     Text {
         id: pText
         anchors.centerIn: parent
         color: "black"
         font.pointSize: 12
-        text: isNaN(Math.round(pBar.value / pBar.to * 100)) ? "0%" : Math.round(pBar.value / pBar.to * 100) + "%"
+        text: isNaN((Math.round(pBar.value / pBar.to)*100)) ? "0%" : Math.round((pBar.value / pBar.to)*100) + "%"
         z: 5
     }
 

@@ -22,4 +22,11 @@ Text {
         color: parent.color
         text: "Gesamtdauer: "
     }
+
+    Text {
+        anchors.left: parent.right
+        font.pointSize: parent.font.pointSize
+        color: parent.color
+        text: " Minuten"
+    }
 }

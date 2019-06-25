@@ -42,16 +42,16 @@ Rectangle {
                 Layout.topMargin: parent.height / 20
 
                 Text {id: port; text: "Arduino USB Port:"; font.pointSize: 16; color: Material.color(Material.Indigo, 2)}
-                TextField {id: portF; implicitWidth: inputWidth;text: Globals.comportNumber(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: tempIntF.forceActiveFocus()}
+                TextField {id: portF; implicitWidth: inputWidth;text: Globals.comportNumber(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: tempIntF.forceActiveFocus(); onAcceptableInputChanged: saveButton.enabled = acceptableInput; validator: IntValidator {bottom: 0; top: 37}}
 
                 Text {id: tempInt; text: "Temperatur-Intervall [sec]:"; font.pointSize: 16; color: Material.color(Material.Indigo, 2)}
-                TextField {id: tempIntF; implicitWidth: inputWidth; text: Globals.intervallTimer(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: speedNormF.forceActiveFocus()}
+                TextField {id: tempIntF; implicitWidth: inputWidth; text: Globals.intervallTimer(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: speedNormF.forceActiveFocus(); onAcceptableInputChanged: saveButton.enabled = acceptableInput; validator: IntValidator {bottom: 0; top: 100}}
 
                 Text {id: speedNorm; text: "Motor-Geschwindigkeit normal [%]:"; font.pointSize: 16; color: Material.color(Material.Indigo, 2)}
-                TextField {id: speedNormF; implicitWidth: inputWidth; text: Globals.motorspeedNormal(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: speedHeatF.forceActiveFocus()}
+                TextField {id: speedNormF; implicitWidth: inputWidth; text: Globals.motorspeedNormal(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: speedHeatF.forceActiveFocus(); onAcceptableInputChanged: saveButton.enabled = acceptableInput; validator: IntValidator {bottom: 0; top: 100}}
 
                 Text {id: speedHeat; text: "Motor-Geschwindigkeit heizen [%]:"; font.pointSize: 16; color: Material.color(Material.Indigo, 2)}
-                TextField {id: speedHeatF; implicitWidth: inputWidth; text: Globals.motorspeedHeat(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: focus = false}
+                TextField {id: speedHeatF; implicitWidth: inputWidth; text: Globals.motorspeedHeat(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: focus = false; onAcceptableInputChanged: saveButton.enabled = acceptableInput; validator: IntValidator {bottom: 0; top: 100}}
             }
 
             GridLayout {
@@ -69,19 +69,19 @@ Rectangle {
                 Text {id: empty; text: ""; font.pointSize: 16}
 
                 Text {id: sfMult; text: "Einmaischen -> Weizen-Rast:"; font.pointSize: 16; color: Material.color(Material.Indigo, 2)}
-                TextField {id: sfMultF; implicitWidth: inputWidth; text: Globals.heatingMultiplierStartFerula(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: fpMultF.forceActiveFocus()}
+                TextField {id: sfMultF; implicitWidth: inputWidth; text: Globals.heatingMultiplierStartFerula(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: fpMultF.forceActiveFocus(); onAcceptableInputChanged: saveButton.enabled = acceptableInput; validator: IntValidator {bottom: 0; top: 100}}
 
                 Text {id: fpMult; text: "Weizen-Rast -> Protease-Rast:"; font.pointSize: 16; color: Material.color(Material.Indigo, 2)}
-                TextField {id: fpMultF; implicitWidth: inputWidth; text: Globals.heatingMultiplierFerulaProtease(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: pmMultF.forceActiveFocus()}
+                TextField {id: fpMultF; implicitWidth: inputWidth; text: Globals.heatingMultiplierFerulaProtease(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: pmMultF.forceActiveFocus(); onAcceptableInputChanged: saveButton.enabled = acceptableInput; validator: IntValidator {bottom: 0; top: 100}}
 
                 Text {id: pmMult; text: "Protease-Rast -> Maltose-Rast:"; font.pointSize: 16; color: Material.color(Material.Indigo, 2)}
-                TextField {id: pmMultF; implicitWidth: inputWidth; text: Globals.heatingMultiplierProteaseMaltose(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: msMultF.forceActiveFocus()}
+                TextField {id: pmMultF; implicitWidth: inputWidth; text: Globals.heatingMultiplierProteaseMaltose(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: msMultF.forceActiveFocus(); onAcceptableInputChanged: saveButton.enabled = acceptableInput; validator: IntValidator {bottom: 0; top: 100}}
 
                 Text {id: msMult; text: "Maltose-Rast -> Zucker-Rast:"; font.pointSize: 16; color: Material.color(Material.Indigo, 2)}
-                TextField {id: msMultF; implicitWidth: inputWidth; text: Globals.heatingMultiplierMaltoseSugar(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: seMultF.forceActiveFocus()}
+                TextField {id: msMultF; implicitWidth: inputWidth; text: Globals.heatingMultiplierMaltoseSugar(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: seMultF.forceActiveFocus(); onAcceptableInputChanged: saveButton.enabled = acceptableInput; validator: IntValidator {bottom: 0; top: 100}}
 
                 Text {id: seMult; text: "Zucker-Rast -> Abmaischen:"; font.pointSize: 16; color: Material.color(Material.Indigo, 2)}
-                TextField {id: seMultF; implicitWidth: inputWidth; text: Globals.heatingMultiplierSugarEnd(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: focus = false}
+                TextField {id: seMultF; implicitWidth: inputWidth; text: Globals.heatingMultiplierSugarEnd(); horizontalAlignment: TextInput.AlignHCenter; verticalAlignment: TextInput.AlignBottom; font.pointSize: 14; selectByMouse: true; persistentSelection: false; onAccepted: focus = false; onAcceptableInputChanged: saveButton.enabled = acceptableInput; validator: IntValidator {bottom: 0; top: 100}}
             }
         }
     }
@@ -123,6 +123,7 @@ Rectangle {
                 Globals.setHeatingMultiplierProteaseMaltose(pmMultF.text)
                 Globals.setHeatingMultiplierMaltoseSugar(msMultF.text)
                 Globals.setHeatingMultiplierSugarEnd(seMultF.text)
+                Globals.saveSettingsToFile()
                 saveTimer.start()
                 Material.background = Material.color(Material.Green, 4)
                 text = "Gespeichert"
