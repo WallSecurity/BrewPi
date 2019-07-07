@@ -14,7 +14,7 @@ Globals::Globals(QObject *parent) :
     m_motorspeedHeat(75.0),
     m_motorspeedNormal(50.0)
 {
-    m_file = new QFile("Settings.txt");
+    m_file = new QFile("settings.txt");
     loadSettingsFromFile();
 }
 

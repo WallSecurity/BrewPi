@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<RCC>
+    <qresource prefix="/">
+        <file alias="pictures/001-close.png">../BrewPi/pictures/001-close.png</file>
+        <file alias="pictures/001-plus.png">../BrewPi/pictures/001-plus.png</file>
+        <file alias="pictures/002-add.png">../BrewPi/pictures/002-add.png</file>
+        <file alias="pictures/002-edit.png">../BrewPi/pictures/002-edit.png</file>
+        <file alias="pictures/002-hot-pot.png">../BrewPi/pictures/002-hot-pot.png</file>
+        <file alias="pictures/folded-newspaper.png">../BrewPi/pictures/folded-newspaper.png</file>
+        <file alias="pictures/plus.png">../BrewPi/pictures/plus.png</file>
+        <file alias="pictures/windowIcon.jpg">../BrewPi/pictures/windowIcon.jpg</file>
+        <file alias="qtquickcontrols2.conf">../BrewPi/qtquickcontrols2.conf</file>
+    </qresource>
+</RCC>
